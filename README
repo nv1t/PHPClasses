@@ -1,0 +1,5 @@
+Socket.class.php:
+Simple Class for Handling Sockets in PHP. I use it as Base for more Advanced Classes like HTTPRequest.class.php
+
+History.class.php:
+You can merge dictionary like arrays with respect to preferences or overwrite it, or generates an array with all inputs :) 
