@@ -1,14 +1,14 @@
 <?php
-define("HISTORY_OVERWRITE",1);
-define("HISTORY_PREFERENCES",2);
-define("HISTORY_ARRAY",4);
-
 class History {
 	public $id = '';
 	private $history = array();	
 	private $options = array();
 	private $final = array();
 	private $preferences = array();
+
+	const OVERWRITE=1;
+	const PREFERENCES=2;
+	const ASARRAY=4;
 
 	public function __construct($id,$opt=array(),$pref=array()) {
 		$this->id = $id;
@@ -56,12 +56,12 @@ class History {
 
 	private function _mergeElement($hist) {
 		foreach($hist as $key=>$elem) {
-			if($this->_checkPermission($key,HISTORY_OVERWRITE)) {
-				if($this->_checkPermission($key,HISTORY_ARRAY)) {
+			if($this->_checkPermission($key,History::OVERWRITE)) {
+				if($this->_checkPermission($key,History::ASARRAY)) {
 						$this->final[$key][] = $elem;
 				} else {
 					if(array_key_exists($key,$this->final)) {
-						$this->final[$key] = ($this->_checkPermission($key,HISTORY_PREFERENCES)) ? $this->_checkPreferences($key,$elem,$this->final[$key]) : $elem;
+						$this->final[$key] = ($this->_checkPermission($key,History::PREFERENCES)) ? $this->_checkPreferences($key,$elem,$this->final[$key]) : $elem;
 					} else $this->final[$key] = $elem;
 				} 
 			} else $this->final[$key][] = $elem;
@@ -103,5 +103,5 @@ class History {
 			}
 		} else return $e1;
 	}
-}  
+} 
 ?>
